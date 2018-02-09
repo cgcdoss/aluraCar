@@ -3,6 +3,7 @@ import { NavController, LoadingController, AlertController, Refresher } from 'io
 import { Http } from '@angular/http';
 import { EscolhaPage } from '../escolha/escolha';
 import { Carro } from '../../domain/carro/carro';
+import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'page-home',
@@ -28,10 +29,10 @@ export class HomePage implements OnInit {
       content: 'Carregando. Aguarde...'
     });
 
-    if (refresh == undefined){
-	    loader.present();
+    if (refresh == undefined) {
+      loader.present();
     }
-    
+
     this._http
       .get('https://aluracar.herokuapp.com')
       .map(res => res.json())
@@ -40,7 +41,7 @@ export class HomePage implements OnInit {
       .then(carros => {
         this.carros = carros
         loader.dismiss();
-        if (refresh != undefined){
+        if (refresh != undefined) {
           refresh.complete();
         }
       })
@@ -52,7 +53,7 @@ export class HomePage implements OnInit {
           subTitle: 'Não foi possível obter a lista de carros. Tente mais tarde',
           buttons: [{ text: 'Ok' }]
         }).present();
-        if (refresh != undefined){
+        if (refresh != undefined) {
           refresh.complete();
         }
       });

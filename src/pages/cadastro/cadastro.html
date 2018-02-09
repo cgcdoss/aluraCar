@@ -24,19 +24,23 @@
       </ion-item-group>
     </ion-card-content>
   </ion-card>
-  <form>
+  <form (ngSubmit)="agenda()">
     <ion-item>
       <ion-label stacked>Nome</ion-label>
-      <ion-input name="nome"></ion-input>
+      <ion-input [(ngModel)]="agendamento.nome" name="nome"></ion-input>
     </ion-item>
     <ion-item>
-        <ion-label stacked>Email</ion-label>
-        <ion-input name="email"></ion-input>
-      </ion-item>
-      <ion-item>
-          <ion-label stacked>Data</ion-label>
-          <ion-datetime name="data" displayFormat="DD/MM/YY"></ion-datetime>
-        </ion-item>
-      <button ion-button block type="submit">Finalizar</button>
+      <ion-label stacked>Email</ion-label>
+      <ion-input [(ngModel)]="agendamento.email" name="email" type="email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Endereço</ion-label>
+      <ion-input [(ngModel)]="agendamento.endereco" name="endereco"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Data</ion-label>
+      <ion-datetime [(ngModel)]="agendamento.data" name="data" displayFormat="DD/MM/YY"></ion-datetime>
+    </ion-item>
+    <button ion-button block type="submit">Finalizar</button>
   </form>
 </ion-content>
