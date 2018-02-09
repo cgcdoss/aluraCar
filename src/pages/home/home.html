@@ -4,7 +4,7 @@
       Alura Car
     </ion-title>
     <ion-buttons end>
-      <button ion-button icon-only (click)="carrega()">
+      <button ion-button icon-only (click)="carrega(refresh)">
         <ion-icon name="refresh"></ion-icon>
       </button>
     </ion-buttons>
@@ -13,6 +13,11 @@
 </ion-header>
 
 <ion-content padding>
+
+  <ion-refresher (ionRefresh)="carrega($event)">
+    <ion-refresher-content pullingText="Puxe para atualizar"></ion-refresher-content>
+  </ion-refresher>
+
   <ion-list>
     <ion-item *ngFor="let carro of carros" (click)="seleciona(carro)">
       <h4>{{carro.nome}}</h4>

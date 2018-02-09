@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, LoadingController, AlertController } from 'ionic-angular';
+import { NavController, LoadingController, AlertController, Refresher } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { EscolhaPage } from '../escolha/escolha';
 import { Carro } from '../../domain/carro/carro';
@@ -11,6 +11,7 @@ import { Carro } from '../../domain/carro/carro';
 export class HomePage implements OnInit {
 
   public carros: Carro[];
+  public refresh: Refresher;
 
   constructor(
     public navCtrl: NavController,
@@ -19,15 +20,18 @@ export class HomePage implements OnInit {
     private _alertCtrl: AlertController) { }
 
   ngOnInit() {
-    this.carrega();
+    this.carrega(this.refresh);
   }
 
-  carrega(){
+  carrega(refresh) {
     let loader = this._loadingCtrl.create({
       content: 'Carregando. Aguarde...'
     });
 
-    loader.present();
+    if (refresh == undefined){
+	    loader.present();
+    }
+    
     this._http
       .get('https://aluracar.herokuapp.com')
       .map(res => res.json())
@@ -36,6 +40,9 @@ export class HomePage implements OnInit {
       .then(carros => {
         this.carros = carros
         loader.dismiss();
+        if (refresh != undefined){
+          refresh.complete();
+        }
       })
       .catch(err => {
         console.log(err);
@@ -45,7 +52,11 @@ export class HomePage implements OnInit {
           subTitle: 'Não foi possível obter a lista de carros. Tente mais tarde',
           buttons: [{ text: 'Ok' }]
         }).present();
+        if (refresh != undefined){
+          refresh.complete();
+        }
       });
+
   }
 
   seleciona(carro) {
