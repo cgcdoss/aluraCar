@@ -1,0 +1,41 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            Sua escolha
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-card>
+        <ion-card-content>
+            <ion-item-group>
+                <ion-item-divider color="light">
+                    <ion-icon ios="ios-car" md="md-car" item-left></ion-icon>
+                    Veículo</ion-item-divider>
+                <ion-item>{{ carro.nome }}</ion-item>
+                <ion-item>
+                    <p>R${{ carro.preco }}</p>
+                </ion-item>
+            </ion-item-group>
+            <ion-item-group>
+                <ion-item-divider color="light">
+                    <ion-icon ios="ios-options" md="md-options" item-left></ion-icon>
+                    Acessórios
+                </ion-item-divider>
+                <ion-item *ngFor="let acessorio of acessorios">
+                    <ion-label>
+                        <h4>{{ acessorio.nome }}</h4>
+                        <p>R${{ acessorio.preco }}</p>
+                    </ion-label>
+                    <!-- <ion-note item-end>R${{acessorio.preco}}</ion-note> -->
+                    <ion-toggle #toggle color="secondary" (ionChange)="atualizaTotal(toggle.checked,acessorio)"></ion-toggle>
+                </ion-item>
+            </ion-item-group>
+            <ion-item-divider color="light">
+                Total: R${{ precoTotal }}
+            </ion-item-divider>
+        </ion-card-content>
+    </ion-card>
+    <button ion-button block (click)="avanca()">Avançar</button>
+</ion-content>
