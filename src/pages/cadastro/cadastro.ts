@@ -61,12 +61,15 @@ export class CadastroPage {
     } else {
       this._service
         .agenda(this.agendamento)
-        .then(() => {
-          this.alerta.setSubTitle('Agendamento realizado com sucesso').present();
+        .then(confirmado => {
+          confirmado ? this.alerta.setSubTitle('Agendamento realizado com sucesso') :
+            this.alerta.setSubTitle('Não foi possível realizar o agendamento');
+          this.alerta.present();
         })
         .catch(err => {
-          this.alerta.setSubTitle('Não foi possível realizar o agendamento').present();
-        })
+          console.log(err);
+          this.alerta.setSubTitle(err.message).present();
+      })
     }
   }
 
